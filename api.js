@@ -4,7 +4,7 @@ var router = express.Router();
 var TaskModel = require('./task_schema');
 
 // Connecting to database 
-var query = "mongodb+srv://<user>:<user_pass>@<cluster_server>/<db_name>?retryWrites=true&w=majority"
+var query = ""
 
 const db = (query);
 mongoose.Promise = global.Promise;
@@ -20,7 +20,7 @@ mongoose.connect(db, {
     }
 });
 
-router.get('/findall', function (req, res) {
+router.get('/all-tasks', function (req, res) {
     TaskModel.find(function (err, data) {
         if (err) {
             console.log(err);
@@ -31,15 +31,47 @@ router.get('/findall', function (req, res) {
     });
 });
 
-router.post('/delete', function (req, res) {
-
-    TaskModel.findOne({}, function (err, user) {
-        user.key_to_delete = undefined;
-        user.save();
+router.get('/get-task/:TaskId', function (req, res) {
+    TaskModel.findOne({TaskId: req.params.TaskId}, function (err, data) {
+        if (err) {
+            console.log(err);
+            res.send("Internal error");
+        }
+        else {
+            res.send(data);
+        }
     });
 });
 
-router.post('/save', function (req, res) {
+
+router.delete('/delete-task', function (req, res) {
+
+    TaskModel.deleteOne({TaskId: req.body.TaskId}, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(data);
+            console.log("Data Deleted!");
+        }
+    });
+});
+
+router.post('/update-task', function (req, res) {
+    TaskModel.updateOne({TaskId: req.body.TaskId}, {
+        Name: req.body.Name,
+        Deadline: req.body.Deadline
+    }, function (err, data) {
+        if (err) {
+            res.send("Internal error");
+            console.log(err);
+        } else {
+            res.send(data);
+            console.log("Data updated!");
+        }
+    });
+});
+
+router.post('/create-task', function (req, res) {
     let task_id = req.body.TaskId;
     let name = req.body.Name;
     let deadline = req.body.Deadline;

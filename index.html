@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/quasar@1.12.13/dist/quasar.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <div id="q-app">
+        HELLO WORLD
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@1.12.13/dist/quasar.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+
+    <script>
+
+      new Vue({
+        el: "#q-app",
+        data: function () {
+          return {
+            url: "http://pstiwebserviceg2.herokuapp.com/api/" ,
+          };
+        },
+        methods: {
+        },
+      });
+    </script>
+  </body>
+</html>
